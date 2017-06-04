@@ -2,6 +2,7 @@ class InputControl {
     constructor() {
         this.held = 0;
         this.released = 0;
+        this.currentlyHolding = false;
         this.getKey();
     }
 
@@ -44,10 +45,14 @@ class InputControl {
     }
 
     jumpPressed() {
-        this.held = 1;
+        if (!this.currentlyHolding) {
+            this.held = 1;
+            this.currentlyHolding = true;
+        }
     }
 
     jumpReleased() {
+        this.currentlyHolding = false;
         this.released = 1;
     }
 
