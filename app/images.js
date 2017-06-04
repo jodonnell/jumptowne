@@ -2,9 +2,8 @@ class Images {
     constructor(callback) {
         this._props = [];
 
-        //this._loadImage('bubRight', 'bub.png');
-        //this.bubRight.onload = callback;
-        callback();
+        this._loadImage('background', 'jumptowne.jpg');
+        this.background.onload = callback;
     }
 
     _loadImage(prop, imageFile) {
@@ -13,7 +12,7 @@ class Images {
 
         this[prop] = new Image();
         this[prop].src = 'assets/' + imageFile;
-        if (prop === 'bubRight') {
+        if (prop === 'background') {
             this[prop].onload = this._callback;
         }
     }

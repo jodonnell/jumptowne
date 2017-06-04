@@ -12,6 +12,10 @@ describe('GameController', function () {
     });
 
     it('draws', function () {
+        window.gameImages = {background: 'yum'};
+        window.gameContext = {drawImage: () => {}};
+        const contextSpy = spyOn(window.gameContext, 'drawImage');
         expect(gameController.draw()).toBe(undefined);
+        expect(contextSpy).toHaveBeenCalledWith('yum', 0, 0);
     });
 });

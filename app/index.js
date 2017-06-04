@@ -8,7 +8,7 @@ SceneCreator.stats();
 
 new GameInit();
 window.gameContext = document.getElementById('gameCanvas').getContext('2d');
-window.gameImages = new Images(function() {
+window.gameImages = new Images(() => {
     let gameController = new GameController(new InputControl());
     SceneCreator.create(gameController);
 });
