@@ -4,7 +4,8 @@ describe('GameController', function () {
     let gameController;
 
     beforeEach(function () {
-        gameController = new GameController({isJumpHeld: () => {return false;}});
+        gameController = new GameController({isJumpPressed: () => {return false;},
+                                             isJumpReleased: () => {return false;}});
     });
 
     it('updates', function () {

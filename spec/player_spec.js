@@ -4,15 +4,24 @@ describe('Player', function () {
     let player, control;
 
     beforeEach(() => {
-        control = {isJumpHeld: () => {}};
+        control = {isJumpPressed: () => {},
+                   isJumpReleased: () => {}};
         player = new Player(control);
     });
 
     it('updates', function () {
-        control.isJumpHeld = () => {return true;};
+        control.isJumpPressed = () => {return true;};
         player.update();
+        expect(player.y).toBe(467);
 
-        expect(player.y).toBe(457);
+        player.update();
+        expect(player.y).toBe(455.5);
+
+        player.update();
+        expect(player.y).toBe(444.5);
+
+        player.update();
+        expect(player.y).toBe(434);
     });
 
     it('draws', function () {
