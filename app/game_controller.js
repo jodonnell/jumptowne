@@ -4,7 +4,7 @@ import GameInit from './game_init';
 class GameController {
     constructor(control) {
         this.control = control;
-        this.player = new Player(GameInit.centerX - 16, GameInit.height - 200, this.control);
+        this.player = new Player(this.control);
     }
 
     draw() {
