@@ -5,7 +5,7 @@ class Images {
         this._loadImage('player', 'cowboy.png');
         this._loadImage('skull', 'skull.png');
         this._loadImage('coin', 'coin.png');
-        this._loadImage('background', 'jumptowne.jpg');
+        this._loadImage('background', 'background.png');
         this.background.onload = callback;
     }
 

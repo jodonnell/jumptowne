@@ -18,7 +18,7 @@ describe('GameController', function () {
         const contextSpy = spyOn(window.gameContext, 'drawImage');
         gameController.draw();
 
-        expect(contextSpy).toHaveBeenCalledWith('yum', 0, 0, 320, 568, 0, 0, 375, 667);
+        expect(contextSpy).toHaveBeenCalledWith('yum', 0, 0, 640, 1136, 0, 0, 375, 667);
         expect(contextSpy).toHaveBeenCalledWith('player', 0, 0, 64, 128, 171.5, 467, 32, 64);
     });
 });

@@ -9,7 +9,7 @@ class GameController {
 
     draw() {
         let image = window.gameImages['background'];
-        window.gameContext.drawImage(image, 0, 0, 320, 568, 0, 0, GameInit.width, GameInit.height);
+        window.gameContext.drawImage(image, 0, 0, 640, 1136, 0, 0, GameInit.width, GameInit.height);
 
         this.player.draw();
     }

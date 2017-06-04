@@ -26,7 +26,7 @@ class Player extends Sprite {
         this.velocityY += gravity;
         this.y += this.velocityY;
 
-        if(this.y > this.groundY()) {
+        if (this.y > this.groundY()) {
             this.y = this.groundY();
             this.velocityY = 0.0;
             this.onGround = true;
