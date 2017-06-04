@@ -2,6 +2,9 @@ class Images {
     constructor(callback) {
         this._props = [];
 
+        this._loadImage('player', 'cowboy.png');
+        this._loadImage('skull', 'skull.png');
+        this._loadImage('coin', 'coin.png');
         this._loadImage('background', 'jumptowne.jpg');
         this.background.onload = callback;
     }

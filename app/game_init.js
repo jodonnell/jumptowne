@@ -18,6 +18,10 @@ class GameInit {
         return this.height / 2;
     }
 
+    static get centerX() {
+        return this.width / 2;
+    }
+
     createCanvas() {
         let left = this.viewportWidth() / 2 - GameInit.width / 2;
         let top = this.viewportHeight() / 2 - GameInit.height / 2;
