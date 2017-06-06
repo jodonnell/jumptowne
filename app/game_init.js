@@ -22,6 +22,10 @@ class GameInit {
         return this.width / 2;
     }
 
+    static get groundY() {
+        return this.height - 190;
+    }
+
     createCanvas() {
         let left = this.viewportWidth() / 2 - GameInit.width / 2;
         let top = this.viewportHeight() / 2 - GameInit.height / 2;

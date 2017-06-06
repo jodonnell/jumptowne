@@ -13,7 +13,7 @@ class Player extends Sprite {
     }
 
     groundY() {
-        return GameInit.height - 200;
+        return GameInit.groundY;
     }
 
     update() {
@@ -42,11 +42,6 @@ class Player extends Sprite {
         }
     }
 
-    draw() {
-        let image = window.gameImages[this.getCurrentImage()];
-        window.gameContext.drawImage(image, 0, 0, 64, 128, this.x, this.y, 32, 64);
-    }
-
     startJump() {
         if (this.onGround) {
             this.velocityY = -12.0;
@@ -59,7 +54,6 @@ class Player extends Sprite {
             this.velocityY = -6.0;
         }
     }
-
 }
 
 export default Player;

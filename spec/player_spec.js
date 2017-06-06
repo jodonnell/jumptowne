@@ -12,24 +12,25 @@ describe('Player', function () {
     it('updates', function () {
         control.isJumpPressed = () => {return true;};
         player.update();
-        expect(player.y).toBe(467);
+        expect(player.y).toBe(477);
 
         player.update();
-        expect(player.y).toBe(455.5);
+        expect(player.y).toBe(465.5);
 
         player.update();
-        expect(player.y).toBe(444.5);
+        expect(player.y).toBe(454.5);
 
         player.update();
-        expect(player.y).toBe(434);
+        expect(player.y).toBe(444);
     });
 
     it('draws', function () {
-        window.gameImages = {player: 'player'};
+        const playerImageObj = {height: 128, width: 64};
+        window.gameImages = {player: playerImageObj};
         window.gameContext = {drawImage: () => {}};
         const contextSpy = spyOn(window.gameContext, 'drawImage');
         player.draw();
 
-        expect(contextSpy).toHaveBeenCalledWith('player', 0, 0, 64, 128, 171.5, 467, 32, 64);
+        expect(contextSpy).toHaveBeenCalledWith(playerImageObj, 0, 0, 64, 128, 171.5, 477, 32, 64);
     });
 });

@@ -1,15 +1,15 @@
 class Sprite {
     draw() {
         let image = window.gameImages[this.getCurrentImage()];
-        window.gameContext.drawImage(image, 0, 0, 64, 128, this.x, this.y, 32, 64);
+        window.gameContext.drawImage(image, 0, 0, this.width() * 2, this.height() * 2, this.x, this.y, this.width(), this.height());
     }
 
     height() {
-        return window.gameImages[this.getCurrentImage()].height;
+        return window.gameImages[this.getCurrentImage()].height / 2;
     }
 
     width() {
-        return window.gameImages[this.getCurrentImage()].width;
+        return window.gameImages[this.getCurrentImage()].width / 2;
     }
 
     getCurrentImage() {
@@ -21,7 +21,7 @@ class Sprite {
     }
 
     bottomSide() {
-        return this.y - this.height();
+        return this.y + this.height();
     }
 
     update() {
