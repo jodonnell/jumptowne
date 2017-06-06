@@ -27,18 +27,20 @@ class GameInit {
     }
 
     createCanvas() {
-        let left = this.viewportWidth() / 2 - GameInit.width / 2;
-        let top = this.viewportHeight() / 2 - GameInit.height / 2;
-
         let canvas = document.createElement('canvas');
         canvas.id = 'gameCanvas';
         canvas.width = GameInit.width;
         canvas.height = GameInit.height;
+
         document.body.appendChild(canvas);
 
+        canvas.style.height = '99%';
+        canvas.style.margin = 'auto';
         canvas.style.position = 'absolute';
-        canvas.style.top = top + 'px';
-        canvas.style.left = left + 'px';
+        canvas.style.marginLeft = 'auto';
+        canvas.style.marginRight = 'auto';
+        canvas.style.left =  '0px';
+        canvas.style.right = '0px';
 
         if (this.hide) {
             canvas.style.visibilty = 'hidden';
