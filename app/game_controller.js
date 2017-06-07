@@ -9,6 +9,7 @@ class GameController {
         this.control = control;
         this.player = new Player(this.control);
         this.coins = [new Coin()];
+        this.score = 0;
     }
 
     draw() {
@@ -17,6 +18,8 @@ class GameController {
 
         _.each(this.coins, (coin) => { coin.draw(); });
         this.player.draw();
+
+        this.drawScore();
     }
 
     update() {
@@ -25,7 +28,14 @@ class GameController {
 
         if (CollisionDetector.doesCollideWithSprites(this.player, this.coins)) {
             this.coins = [];
+            this.score += 1;
         }
+    }
+
+    drawScore() {
+        window.gameContext.font = '90px "Munro"';
+        const length = window.gameContext.measureText(this.score).width;
+        window.gameContext.fillText(this.score, GameInit.centerX - (length / 2), 90);
     }
 }
 
