@@ -1,14 +1,20 @@
 import Player from './player';
 import GameInit from './game_init';
 import Coin from './coin';
+import Skull from './skull';
 import CollisionDetector from './collision_detector';
 import _ from 'lodash';
 
 class GameController {
     constructor(control) {
         this.control = control;
+        this.initGame();
+    }
+
+    initGame() {
         this.player = new Player(this.control);
         this.coins = [new Coin()];
+        this.enemies = [new Skull()];
         this.score = 0;
     }
 
@@ -17,6 +23,7 @@ class GameController {
         window.gameContext.drawImage(image, 0, 0, 640, 1136, 0, 0, GameInit.width, GameInit.height);
 
         _.each(this.coins, (coin) => { coin.draw(); });
+        _.each(this.enemies, (enemy) => { enemy.draw(); });
         this.player.draw();
 
         this.drawScore();
@@ -25,10 +32,15 @@ class GameController {
     update() {
         this.player.update();
         _.each(this.coins, (coin) => { coin.update(); });
+        _.each(this.enemies, (enemy) => { enemy.update(); });
 
         if (CollisionDetector.doesCollideWithSprites(this.player, this.coins)) {
             this.coins = [];
             this.score += 1;
+        }
+
+        if (CollisionDetector.doesCollideWithSprites(this.player, this.enemies)) {
+            this.initGame();
         }
     }
 

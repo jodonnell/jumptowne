@@ -1,7 +1,7 @@
 import GameController from '../app/game_controller';
 
 describe('GameController', function () {
-    let gameController, playerImageObj, coinImageObj;
+    let gameController, playerImageObj, coinImageObj, skullObj;
 
     beforeEach(function () {
         gameController = new GameController({isJumpPressed: () => {return false;},
@@ -9,7 +9,9 @@ describe('GameController', function () {
 
         playerImageObj = {height: 128, width: 64};
         coinImageObj = {width: 24, height: 36};
-        window.gameImages = {background: 'yum', player: playerImageObj, coin: coinImageObj};
+        skullObj = {width: 58 / 2, height: 64 / 2};
+        window.gameImages = {background: 'yum', player: playerImageObj, coin: coinImageObj,
+                             skull: skullObj};
         window.gameContext = {drawImage: () => {}, fillText: () => {}, measureText: () => {return {width: 20};}};
     });
 
@@ -43,6 +45,20 @@ describe('GameController', function () {
         gameController.update();
 
         expect(gameController.score).toBe(1);
+    });
+
+    it('kills you when you touch the skull', () => {
+        gameController.player.x = 40;
+        gameController.player.y = 40;
+        gameController.enemies[0].x = 41;
+        gameController.enemies[0].y = 41;
+        gameController.update();
+
+        expect(gameController.player.x).toBe(171.5);
+    });
+
+    it('has an enemy', () => {
+        expect(gameController.enemies.length).toBe(1);
     });
 
 });
