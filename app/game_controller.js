@@ -1,7 +1,7 @@
 import Player from './player';
 import GameInit from './game_init';
-import Coin from './coin';
-import Skull from './skull';
+import Pattern from './pattern';
+import OnscreenSprites from './onscreen_sprites';
 import CollisionDetector from './collision_detector';
 import _ from 'lodash';
 
@@ -12,9 +12,13 @@ class GameController {
     }
 
     initGame() {
-        this.player = new Player(this.control);
-        this.coins = [new Coin()];
-        this.enemies = [new Skull()];
+        const player = new Player(this.control);
+        const coins = [];
+        const enemies = [];
+        this.onscreenSprites = new OnscreenSprites({player: [player],
+                                                    coins: coins,
+                                                    enemies: enemies });
+        this.patterns = [new Pattern(this.onscreenSprites)];
         this.score = 0;
     }
 
@@ -22,24 +26,25 @@ class GameController {
         let image = window.gameImages['background'];
         window.gameContext.drawImage(image, 0, 0, 640, 1136, 0, 0, GameInit.width, GameInit.height);
 
-        _.each(this.coins, (coin) => { coin.draw(); });
-        _.each(this.enemies, (enemy) => { enemy.draw(); });
-        this.player.draw();
-
+        this._eachSprite((sprite) => { sprite.draw(); });
         this.drawScore();
     }
 
     update() {
-        this.player.update();
-        _.each(this.coins, (coin) => { coin.update(); });
-        _.each(this.enemies, (enemy) => { enemy.update(); });
+        this._eachSprite((sprite) => {
+            sprite.update({onscreenSprites: this.onscreenSprites});
+        });
 
-        if (CollisionDetector.doesCollideWithSprites(this.player, this.coins)) {
-            this.coins = [];
+        _.each(this.patterns, (pattern) => { pattern.update(); });
+        _.remove(this.patterns, (pattern) => { return pattern.isOver(); });
+
+        let collidedWith = CollisionDetector.doesCollideWithSprites(this.onscreenSprites.player, this.onscreenSprites.coins);
+        if (collidedWith) {
+            this.onscreenSprites.coins.remove(collidedWith);
             this.score += 1;
         }
 
-        if (CollisionDetector.doesCollideWithSprites(this.player, this.enemies)) {
+        if (CollisionDetector.doesCollideWithSprites(this.onscreenSprites.player, this.onscreenSprites.enemies)) {
             this.initGame();
         }
     }
@@ -48,6 +53,16 @@ class GameController {
         window.gameContext.font = '90px "Munro"';
         const length = window.gameContext.measureText(this.score).width;
         window.gameContext.fillText(this.score, GameInit.centerX - (length / 2), 90);
+    }
+
+    _eachSprite(spriteAction) {
+        for (let i = 0; i < this.onscreenSprites.sprites.length; i++) {
+            const sprites = this.onscreenSprites.sprites[i];
+            for (let j = 0; j < sprites.length; j++) {
+                const sprite = this.onscreenSprites.sprites[i][j];
+                spriteAction(sprite);
+            }
+        }
     }
 }
 

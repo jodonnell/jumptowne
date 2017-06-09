@@ -1,4 +1,6 @@
 import GameController from '../app/game_controller';
+import Coin from '../app/coin';
+import Skull from '../app/skull';
 
 describe('GameController', function () {
     let gameController, playerImageObj, coinImageObj, skullObj;
@@ -13,6 +15,9 @@ describe('GameController', function () {
         window.gameImages = {background: 'yum', player: playerImageObj, coin: coinImageObj,
                              skull: skullObj};
         window.gameContext = {drawImage: () => {}, fillText: () => {}, measureText: () => {return {width: 20};}};
+
+        gameController.onscreenSprites.enemies.push(new Skull());
+        gameController.onscreenSprites.coins.push(new Coin());
     });
 
     it('updates', function () {
@@ -38,27 +43,27 @@ describe('GameController', function () {
     });
 
     it('updates the score when you collide with a coin', () => {
-        gameController.player.x = 40;
-        gameController.player.y = 40;
-        gameController.coins[0].x = 41;
-        gameController.coins[0].y = 41;
+        gameController.onscreenSprites.player.x = 40;
+        gameController.onscreenSprites.player.y = 40;
+        gameController.onscreenSprites.coins[0].x = 41;
+        gameController.onscreenSprites.coins[0].y = 41;
         gameController.update();
 
         expect(gameController.score).toBe(1);
     });
 
     it('kills you when you touch the skull', () => {
-        gameController.player.x = 40;
-        gameController.player.y = 40;
-        gameController.enemies[0].x = 41;
-        gameController.enemies[0].y = 41;
+        gameController.onscreenSprites.player.x = 40;
+        gameController.onscreenSprites.player.y = 40;
+        gameController.onscreenSprites.enemies[0].x = 41;
+        gameController.onscreenSprites.enemies[0].y = 41;
         gameController.update();
 
-        expect(gameController.player.x).toBe(171.5);
+        expect(gameController.onscreenSprites.player.x).toBe(171.5);
     });
 
     it('has an enemy', () => {
-        expect(gameController.enemies.length).toBe(1);
+        expect(gameController.onscreenSprites.enemies.length).toBe(1);
     });
 
 });
