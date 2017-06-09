@@ -11,7 +11,7 @@ class Skull extends Sprite {
     }
 
     update() {
-        this.x -= 1;
+        this.x -= 2;
     }
 }
 

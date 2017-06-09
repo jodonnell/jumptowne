@@ -1,6 +1,6 @@
-import Coin from './coin';
+import Coin from '../coin';
 
-class Pattern {
+class Basic3Coin {
     constructor(onscreenSprites) {
         this.onscreenSprites = onscreenSprites;
         this.timer = 0;
@@ -19,4 +19,4 @@ class Pattern {
     }
 }
 
-export default Pattern;
+export default Basic3Coin;

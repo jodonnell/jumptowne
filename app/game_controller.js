@@ -1,9 +1,8 @@
 import Player from './player';
 import GameInit from './game_init';
-import Pattern from './pattern';
+import Patterns from './patterns';
 import OnscreenSprites from './onscreen_sprites';
 import CollisionDetector from './collision_detector';
-import _ from 'lodash';
 
 class GameController {
     constructor(control) {
@@ -18,35 +17,44 @@ class GameController {
         this.onscreenSprites = new OnscreenSprites({player: [player],
                                                     coins: coins,
                                                     enemies: enemies });
-        this.patterns = [new Pattern(this.onscreenSprites)];
+        this.patterns = new Patterns(this.onscreenSprites);
         this.score = 0;
     }
 
     draw() {
-        let image = window.gameImages['background'];
-        window.gameContext.drawImage(image, 0, 0, 640, 1136, 0, 0, GameInit.width, GameInit.height);
-
+        this.drawBackground();
         this._eachSprite((sprite) => { sprite.draw(); });
         this.drawScore();
     }
 
     update() {
-        this._eachSprite((sprite) => {
-            sprite.update({onscreenSprites: this.onscreenSprites});
-        });
+        this._eachSprite((sprite) => { sprite.update({onscreenSprites: this.onscreenSprites}); });
+        this.updatePatterns();
+        this.coinCollision();
+        this.enemCollision();
+    }
 
-        _.each(this.patterns, (pattern) => { pattern.update(); });
-        _.remove(this.patterns, (pattern) => { return pattern.isOver(); });
+    updatePatterns() {
+        this.patterns.update();
+    }
 
+    enemCollision() {
+        if (CollisionDetector.doesCollideWithSprites(this.onscreenSprites.player, this.onscreenSprites.enemies)) {
+            this.initGame();
+        }
+    }
+
+    coinCollision() {
         let collidedWith = CollisionDetector.doesCollideWithSprites(this.onscreenSprites.player, this.onscreenSprites.coins);
         if (collidedWith) {
             this.onscreenSprites.coins.remove(collidedWith);
             this.score += 1;
         }
+    }
 
-        if (CollisionDetector.doesCollideWithSprites(this.onscreenSprites.player, this.onscreenSprites.enemies)) {
-            this.initGame();
-        }
+    drawBackground() {
+        let image = window.gameImages['background'];
+        window.gameContext.drawImage(image, 0, 0, 640, 1136, 0, 0, GameInit.width, GameInit.height);
     }
 
     drawScore() {
