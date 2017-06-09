@@ -2,8 +2,10 @@ import Coin from '../coin';
 import Skull from '../skull';
 
 class BasicSkullCoinSandwich {
-    constructor(onscreenSprites) {
+    constructor(onscreenSprites, speed, y) {
         this.onscreenSprites = onscreenSprites;
+        this.speed = speed;
+        this.y = y;
         this.timer = 0;
     }
 
@@ -14,13 +16,13 @@ class BasicSkullCoinSandwich {
             this.timer === 80 ||
             this.timer === 120)
         {
-            this.onscreenSprites.coins.push(new Coin());
+            this.onscreenSprites.coins.push(new Coin(this.speed, this.y));
         }
 
         if (this.timer === 20 ||
             this.timer === 140)
         {
-            this.onscreenSprites.enemies.push(new Skull());
+            this.onscreenSprites.enemies.push(new Skull(this.speed, this.y));
         }
     }
 

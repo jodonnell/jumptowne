@@ -16,8 +16,8 @@ describe('GameController', function () {
                              skull: skullObj};
         window.gameContext = {drawImage: () => {}, fillText: () => {}, measureText: () => {return {width: 20};}};
 
-        gameController.onscreenSprites.enemies.push(new Skull());
-        gameController.onscreenSprites.coins.push(new Coin());
+        gameController.onscreenSprites.enemies.push(new Skull(1, 0));
+        gameController.onscreenSprites.coins.push(new Coin(2, 0));
     });
 
     it('updates', function () {

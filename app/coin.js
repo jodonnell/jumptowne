@@ -2,17 +2,18 @@ import Sprite from './sprite';
 import GameInit from './game_init';
 
 class Coin extends Sprite {
-    constructor() {
+    constructor(speed, yOffset) {
         super();
         this.x = GameInit.width;
-        this.y = GameInit.groundY - 100;
+        this.y = GameInit.groundY - 100 + yOffset;
+        this.speed = speed;
 
         this.currentImage = 'coin';
     }
 
 
     update() {
-        this.x -= 2;
+        this.x -= this.speed;
     }
 }
 
